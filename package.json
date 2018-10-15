@@ -1,10 +1,12 @@
 {
-  "name": "vue-table",
+  "name": "vue_table",
   "version": "0.1.0",
   "private": true,
+  "git" : "https://github.com/RobinMglsk/Vue_table",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build-bundel": "vue-cli-service build --target lib --name QueryBuilder ./src/components/QueryBuilder.vue",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
