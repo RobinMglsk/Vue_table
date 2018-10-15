@@ -6,7 +6,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build-bundel": "vue-cli-service build --target lib --name QueryBuilder ./src/components/QueryBuilder.vue",
+    "build-bundel": "vue-cli-service build --target lib --name Table ./src/components/Table.vue",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
