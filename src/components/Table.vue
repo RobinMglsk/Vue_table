@@ -53,7 +53,7 @@
       </div>
       <div class="col-md-6 offset-lg-2  offset-xl-3">
         <div class="float-right">
-        <Pagination :data="pagination" @pagination-change-page="pageChange"/>
+          <Pagination v-if="!loading" :data="pagination" @pagination-change-page="pageChange"/>
         </div>
       </div>
     </div>
@@ -222,7 +222,7 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss" scoped>
   .link {
     cursor: pointer;
   }
