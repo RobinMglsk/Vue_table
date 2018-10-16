@@ -10,7 +10,7 @@
         <tbody>
           <tr>
             <td v-show="loading" :colspan="columns_norm.length" class="loader">
-              <LoadingIndicator />
+              <LoadingIndicator aria-busy="true"/>
             </td>
           </tr>
           <tr v-show="!loading" v-for="(row, key) in data" :key="key" :class="{ 'link' : typeof link === 'object'}" @click="followLink(key)">

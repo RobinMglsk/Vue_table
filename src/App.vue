@@ -49,12 +49,12 @@ export default {
     getData: function(page, itemsPerPage, sortColumn, sortOrder){
 
       window.console.log(page+itemsPerPage+sortColumn+sortOrder)
-      this.pagination.current_page = testData[page].current_page
-      this.pagination.from = testData[page].from
-      this.pagination.to = testData[page].to
-      this.pagination.last_page = testData[page].last_page
-      this.pagination.total = testData[page].total
-      this.pagination.per_page = testData[page].per_page
+      this.pagination.current_page = parseInt(testData[page].current_page)
+      this.pagination.from = parseInt(testData[page].from)
+      this.pagination.to = parseInt(testData[page].to)
+      this.pagination.last_page = parseInt(testData[page].last_page)
+      this.pagination.total = parseInt(testData[page].total)
+      this.pagination.per_page = parseInt(testData[page].per_page)
 
       this.data = testData[page].data
     }
