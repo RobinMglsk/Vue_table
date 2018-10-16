@@ -8,7 +8,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(row, key) in data" :key="key" :class="{ 'link' : typeof link === 'object'}" @click="followLink(key)">
+          <tr>
+            <td v-show="loading" :colspan="columns_norm.length" class="loader">
+              <LoadingIndicator />
+            </td>
+          </tr>
+          <tr v-show="!loading" v-for="(row, key) in data" :key="key" :class="{ 'link' : typeof link === 'object'}" @click="followLink(key)">
             <td v-for="(column,key) in columns_norm" :key="key">
               
               <!-- Type is boolean -->
@@ -33,7 +38,7 @@
         </tbody>
       </table>
     </div>
-    <div class="row">
+    <div v-show="!loading"  class="row">
       <div class="col-md-6 col-lg-4 col-xl-3">
         <div class="form-group form-row">
           <div class="col-sm-6">
@@ -56,10 +61,15 @@
 </template>
 <script>
 import Pagination from './Pagination'
+import LoadingIndicator from './LoadingIndicator'
 export default {
   name: 'Table',
-  components: { Pagination },
+  components: { Pagination, LoadingIndicator },
   props: {
+    loading: {
+      type: Boolean,
+      default: false
+    },
     link : {
       type: [ Object, Boolean],
       default: false
@@ -215,5 +225,9 @@ export default {
 <style>
   .link {
     cursor: pointer;
+  }
+  .loader{
+    background: white;
+    text-align: center;
   }
 </style>
