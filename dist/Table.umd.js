@@ -681,6 +681,29 @@ module.exports = function (it, tag, stat) {
 
 /***/ }),
 
+/***/ "7f7f":
+/***/ (function(module, exports, __webpack_require__) {
+
+var dP = __webpack_require__("86cc").f;
+var FProto = Function.prototype;
+var nameRE = /^\s*function ([^ (]*)/;
+var NAME = 'name';
+
+// 19.2.4.2 name
+NAME in FProto || __webpack_require__("9e1e") && dP(FProto, NAME, {
+  configurable: true,
+  get: function () {
+    try {
+      return ('' + this).match(nameRE)[1];
+    } catch (e) {
+      return '';
+    }
+  }
+});
+
+
+/***/ }),
+
 /***/ "8378":
 /***/ (function(module, exports) {
 
@@ -1053,15 +1076,12 @@ __webpack_require__.r(__webpack_exports__);
 // EXTERNAL MODULE: ./node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
 var setPublicPath = __webpack_require__("1eb2");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"9e7853d2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Table.vue?vue&type=template&id=d909f882&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"table"}},[_c('div',{class:{'table-responsive':_vm.responsive}},[_c('table',{class:_vm.classes.table},[_c('thead',{class:_vm.classes.thead},[_c('tr',_vm._l((_vm.columns),function(column,key){return _c('th',{key:key,on:{"click":function($event){_vm.setSortColumn(key)}}},[_vm._v(_vm._s(column))])}))]),_c('tbody',_vm._l((_vm.data),function(row,key){return _c('tr',{key:key},_vm._l((_vm.columns),function(column,key){return _c('td',{key:key},[_vm._v(_vm._s(row[key]))])}))}))])]),_c('div',{staticClass:"row"},[_c('div',{staticClass:"md-6"},[_c('div',{staticClass:"form-group"},[_c('label',{attrs:{"for":"rowsPerPage"}},[_vm._v(_vm._s(_vm.trans.rowsPerPage))]),_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.rowsPerPage),expression:"rowsPerPage"}],attrs:{"name":"rowsPerPage","id":"rowsPerPage"},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.rowsPerPage=$event.target.multiple ? $$selectedVal : $$selectedVal[0]}}},[_c('option',{attrs:{"value":"25"}},[_vm._v("25")]),_c('option',{attrs:{"value":"50"}},[_vm._v("50")]),_c('option',{attrs:{"value":"100"}},[_vm._v("100")])])])])])])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"9e7853d2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Table.vue?vue&type=template&id=3684c6b7&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"table"}},[_c('div',{class:{'table-responsive':_vm.responsive}},[_c('table',{class:_vm.classes.table},[_c('thead',{class:_vm.classes.thead},[_c('tr',_vm._l((_vm.columns_norm),function(column,key){return _c('th',{key:key,on:{"click":function($event){_vm.setSortColumn(key)}}},[_vm._v(_vm._s(column.name))])}))]),_c('tbody',_vm._l((_vm.data),function(row,key){return _c('tr',{key:key},_vm._l((_vm.columns_norm),function(column,key){return _c('td',{key:key},[(column.type === 'boolean')?[(row[column.dataKey[0]])?[_vm._v(_vm._s(_vm.booleanIcons.true))]:[_vm._v(_vm._s(_vm.booleanIcons.false))]]:[_vm._l((column.dataKey),function(key){return [_vm._v(_vm._s(row[key])+" ")]})]],2)}))}))])]),_c('div',{staticClass:"row"},[_c('div',{staticClass:"md-6"},[_c('div',{staticClass:"form-group"},[_c('label',{attrs:{"for":"rowsPerPage"}},[_vm._v(_vm._s(_vm.trans.rowsPerPage))]),_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.rowsPerPage),expression:"rowsPerPage"}],staticClass:"form-control",attrs:{"name":"rowsPerPage","id":"rowsPerPage"},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.rowsPerPage=$event.target.multiple ? $$selectedVal : $$selectedVal[0]}}},[_c('option',{attrs:{"value":"25"}},[_vm._v("25")]),_c('option',{attrs:{"value":"50"}},[_vm._v("50")]),_c('option',{attrs:{"value":"100"}},[_vm._v("100")])])])])])])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Table.vue?vue&type=template&id=d909f882&
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom.iterable.js
-var web_dom_iterable = __webpack_require__("ac6a");
+// CONCATENATED MODULE: ./src/components/Table.vue?vue&type=template&id=3684c6b7&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.iterator.js
 var es6_array_iterator = __webpack_require__("cadf");
@@ -1069,10 +1089,47 @@ var es6_array_iterator = __webpack_require__("cadf");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.object.keys.js
 var es6_object_keys = __webpack_require__("456d");
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.function.name.js
+var es6_function_name = __webpack_require__("7f7f");
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/builtin/es6/typeof.js
+function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
+
+function _typeof(obj) {
+  if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
+    _typeof = function _typeof(obj) {
+      return _typeof2(obj);
+    };
+  } else {
+    _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
+    };
+  }
+
+  return _typeof(obj);
+}
+// EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom.iterable.js
+var web_dom_iterable = __webpack_require__("ac6a");
+
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Table.vue?vue&type=script&lang=js&
 
 
 
+
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1104,8 +1161,17 @@ var es6_object_keys = __webpack_require__("456d");
 //
 //
 /* harmony default export */ var Tablevue_type_script_lang_js_ = ({
-  name: 'vue-table',
+  name: 'Table',
   props: {
+    booleanIcons: {
+      type: Object,
+      default: function _default() {
+        return {
+          true: 'X',
+          false: ''
+        };
+      }
+    },
     responsive: {
       type: Boolean,
       default: true
@@ -1127,8 +1193,45 @@ var es6_object_keys = __webpack_require__("456d");
         };
       }
     },
-    data: Array,
-    columns: Object
+    data: [Array, Object],
+    columns: Array
+  },
+  computed: {
+    columns_norm: function columns_norm() {
+      var columns = [];
+      this.columns.forEach(function (column) {
+        var col = {}; // Add key
+
+        if (typeof column.key === 'undefined' || typeof column.key !== 'string' && _typeof(column.key) !== 'object') {
+          window.console.log(column.key);
+          return;
+        } else if (typeof column.key === 'string') {
+          col.dataKey = [column.key];
+          col.sortKey = column.key;
+        } else {
+          col.dataKey = column.key;
+          col.sortKey = column.key[0];
+        } // Add name
+
+
+        if (typeof column.name === 'undefined') {
+          col.name = column.key;
+        } else {
+          col.name = column.name;
+        } // Add type
+
+
+        if (typeof column.type === 'undefined' || column.type !== 'string' && column.type !== 'boolean' && column.type !== 'date') {
+          col.type = 'string';
+        } else {
+          col.type = column.type;
+        }
+
+        columns.push(col);
+        return;
+      });
+      return columns;
+    }
   },
   data: function data() {
     return {
