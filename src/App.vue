@@ -18,29 +18,43 @@ export default {
         table: ['table', 'table-striped'],
         thead: ['thead-dark']
       },
-      columns: {
-        first_name : 'First Name',
-        email : 'E-mail',
-        phone : 'Phone number'
-      },
+      columns: [
+        {
+          name: 'First Name',
+          type: 'First Name',
+          key: 'first_name'
+        },
+         {
+          name: 'Name',
+          key: ['first_name','last_name']
+        },
+         {
+          name: 'Active',
+          key: ['active'],
+          type: 'boolean'
+        }
+      ],
       tableData: [
         {
           first_name : 'Robin',
           last_name : 'Migalski',
           email : 'robin@robinmglsk.com',
-          phone : '011 22 33 32'
+          phone : '011 22 33 32',
+          active : true
         },
         {
           first_name : 'Ebe',
           last_name : 'Migalski',
           email : 'Ebe@robinmglsk.com',
-          phone : '011 22 33 31'
+          phone : '011 22 33 31',
+          active : true
         },
         {
           first_name : 'Jolien',
           last_name : 'Coemans',
           email : 'jolien@robinmglsk.com',
-          phone : '011 22 33 33'
+          phone : '011 22 33 33',
+          active : false
         }
       ]
     }
