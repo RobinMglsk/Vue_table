@@ -17,7 +17,7 @@
                   <font-awesome-icon v-if="row[column.dataKey[0]]" :icon="booleanIcons.true"/>
                   <font-awesome-icon v-else :icon="booleanIcons.false"/>
                 </template>
-                <template v-if="booleanIcons.type === 'font-awesome'">
+                <template v-else>
                   <template v-if="row[column.dataKey[0]]">{{booleanIcons.true}}</template>
                   <template v-else>{{booleanIcons.false}}</template>
                 </template>
@@ -34,14 +34,16 @@
       </table>
     </div>
     <div class="row">
-      <div class="md-6">
-        <div class="form-group">
-          <label for="rowsPerPage">{{trans.rowsPerPage}}</label>
-          <select name="rowsPerPage" id="rowsPerPage" class="form-control" v-model="rowsPerPage">
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select>
+      <div class="col-md-6 col-lg-4 col-xl-3">
+        <div class="form-group form-row">
+          <div class="col-sm-6">
+            <select name="rowsPerPage" id="rowsPerPage" class="form-control" v-model="rowsPerPage">
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </div>
+          <label for="rowsPerPage" class="col-sm-6 col-form-label">{{trans.rowsPerPage}}</label>
         </div>
       </div>
     </div>
@@ -77,7 +79,7 @@ export default {
       type: Object,
       default: function(){
         return {
-          rowsPerPage: 'Items'
+          rowsPerPage: 'Items per page'
         }
       }
     },
