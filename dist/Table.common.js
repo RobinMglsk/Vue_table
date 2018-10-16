@@ -178,6 +178,29 @@ module.exports = Object.keys || function keys(O) {
 
 /***/ }),
 
+/***/ "11e9":
+/***/ (function(module, exports, __webpack_require__) {
+
+var pIE = __webpack_require__("52a7");
+var createDesc = __webpack_require__("4630");
+var toIObject = __webpack_require__("6821");
+var toPrimitive = __webpack_require__("6a99");
+var has = __webpack_require__("69a8");
+var IE8_DOM_DEFINE = __webpack_require__("c69a");
+var gOPD = Object.getOwnPropertyDescriptor;
+
+exports.f = __webpack_require__("9e1e") ? gOPD : function getOwnPropertyDescriptor(O, P) {
+  O = toIObject(O);
+  P = toPrimitive(P, true);
+  if (IE8_DOM_DEFINE) try {
+    return gOPD(O, P);
+  } catch (e) { /* empty */ }
+  if (has(O, P)) return createDesc(!pIE.f.call(O, P), O[P]);
+};
+
+
+/***/ }),
+
 /***/ "1495":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -463,6 +486,14 @@ module.exports = function (it) {
 
 /***/ }),
 
+/***/ "52a7":
+/***/ (function(module, exports) {
+
+exports.f = {}.propertyIsEnumerable;
+
+
+/***/ }),
+
 /***/ "5537":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -528,6 +559,22 @@ $export.W = 32;  // wrap
 $export.U = 64;  // safe
 $export.R = 128; // real proto method for `library`
 module.exports = $export;
+
+
+/***/ }),
+
+/***/ "5dbc":
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__("d3f4");
+var setPrototypeOf = __webpack_require__("8b97").set;
+module.exports = function (that, target, C) {
+  var S = target.constructor;
+  var P;
+  if (S !== C && typeof S == 'function' && (P = S.prototype) !== C.prototype && isObject(P) && setPrototypeOf) {
+    setPrototypeOf(that, P);
+  } return that;
+};
 
 
 /***/ }),
@@ -735,6 +782,52 @@ exports.f = __webpack_require__("9e1e") ? Object.defineProperty : function defin
 
 /***/ }),
 
+/***/ "8b97":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Works with __proto__ only. Old v8 can't work with null proto objects.
+/* eslint-disable no-proto */
+var isObject = __webpack_require__("d3f4");
+var anObject = __webpack_require__("cb7c");
+var check = function (O, proto) {
+  anObject(O);
+  if (!isObject(proto) && proto !== null) throw TypeError(proto + ": can't set as prototype!");
+};
+module.exports = {
+  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
+    function (test, buggy, set) {
+      try {
+        set = __webpack_require__("9b43")(Function.call, __webpack_require__("11e9").f(Object.prototype, '__proto__').set, 2);
+        set(test, []);
+        buggy = !(test instanceof Array);
+      } catch (e) { buggy = true; }
+      return function setPrototypeOf(O, proto) {
+        check(O, proto);
+        if (buggy) O.__proto__ = proto;
+        else set(O, proto);
+        return O;
+      };
+    }({}, false) : undefined),
+  check: check
+};
+
+
+/***/ }),
+
+/***/ "9093":
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
+var $keys = __webpack_require__("ce10");
+var hiddenKeys = __webpack_require__("e11e").concat('length', 'prototype');
+
+exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
+  return $keys(O, hiddenKeys);
+};
+
+
+/***/ }),
+
 /***/ "9b43":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -796,6 +889,43 @@ module.exports = function (it) {
 module.exports = !__webpack_require__("79e5")(function () {
   return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
 });
+
+
+/***/ }),
+
+/***/ "aa77":
+/***/ (function(module, exports, __webpack_require__) {
+
+var $export = __webpack_require__("5ca1");
+var defined = __webpack_require__("be13");
+var fails = __webpack_require__("79e5");
+var spaces = __webpack_require__("fdef");
+var space = '[' + spaces + ']';
+var non = '\u200b\u0085';
+var ltrim = RegExp('^' + space + space + '*');
+var rtrim = RegExp(space + space + '*$');
+
+var exporter = function (KEY, exec, ALIAS) {
+  var exp = {};
+  var FORCE = fails(function () {
+    return !!spaces[KEY]() || non[KEY]() != non;
+  });
+  var fn = exp[KEY] = FORCE ? exec(trim) : spaces[KEY];
+  if (ALIAS) exp[ALIAS] = fn;
+  $export($export.P + $export.F * FORCE, 'String', exp);
+};
+
+// 1 -> String#trimLeft
+// 2 -> String#trimRight
+// 3 -> String#trim
+var trim = exporter.trim = function (string, TYPE) {
+  string = String(defined(string));
+  if (TYPE & 1) string = string.replace(ltrim, '');
+  if (TYPE & 2) string = string.replace(rtrim, '');
+  return string;
+};
+
+module.exports = exporter;
 
 
 /***/ }),
@@ -903,6 +1033,83 @@ module.exports = function (IS_INCLUDES) {
     } return !IS_INCLUDES && -1;
   };
 };
+
+
+/***/ }),
+
+/***/ "c5f6":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__("7726");
+var has = __webpack_require__("69a8");
+var cof = __webpack_require__("2d95");
+var inheritIfRequired = __webpack_require__("5dbc");
+var toPrimitive = __webpack_require__("6a99");
+var fails = __webpack_require__("79e5");
+var gOPN = __webpack_require__("9093").f;
+var gOPD = __webpack_require__("11e9").f;
+var dP = __webpack_require__("86cc").f;
+var $trim = __webpack_require__("aa77").trim;
+var NUMBER = 'Number';
+var $Number = global[NUMBER];
+var Base = $Number;
+var proto = $Number.prototype;
+// Opera ~12 has broken Object#toString
+var BROKEN_COF = cof(__webpack_require__("2aeb")(proto)) == NUMBER;
+var TRIM = 'trim' in String.prototype;
+
+// 7.1.3 ToNumber(argument)
+var toNumber = function (argument) {
+  var it = toPrimitive(argument, false);
+  if (typeof it == 'string' && it.length > 2) {
+    it = TRIM ? it.trim() : $trim(it, 3);
+    var first = it.charCodeAt(0);
+    var third, radix, maxCode;
+    if (first === 43 || first === 45) {
+      third = it.charCodeAt(2);
+      if (third === 88 || third === 120) return NaN; // Number('+0x1') should be NaN, old V8 fix
+    } else if (first === 48) {
+      switch (it.charCodeAt(1)) {
+        case 66: case 98: radix = 2; maxCode = 49; break; // fast equal /^0b[01]+$/i
+        case 79: case 111: radix = 8; maxCode = 55; break; // fast equal /^0o[0-7]+$/i
+        default: return +it;
+      }
+      for (var digits = it.slice(2), i = 0, l = digits.length, code; i < l; i++) {
+        code = digits.charCodeAt(i);
+        // parseInt parses a string to a first unavailable symbol
+        // but ToNumber should return NaN if a string contains unavailable symbols
+        if (code < 48 || code > maxCode) return NaN;
+      } return parseInt(digits, radix);
+    }
+  } return +it;
+};
+
+if (!$Number(' 0o1') || !$Number('0b1') || $Number('+0x1')) {
+  $Number = function Number(value) {
+    var it = arguments.length < 1 ? 0 : value;
+    var that = this;
+    return that instanceof $Number
+      // check on 1..constructor(foo) case
+      && (BROKEN_COF ? fails(function () { proto.valueOf.call(that); }) : cof(that) != NUMBER)
+        ? inheritIfRequired(new Base(toNumber(it)), that, $Number) : toNumber(it);
+  };
+  for (var keys = __webpack_require__("9e1e") ? gOPN(Base) : (
+    // ES3:
+    'MAX_VALUE,MIN_VALUE,NaN,NEGATIVE_INFINITY,POSITIVE_INFINITY,' +
+    // ES6 (in case, if modules with ES6 Number statics required before):
+    'EPSILON,isFinite,isInteger,isNaN,isSafeInteger,MAX_SAFE_INTEGER,' +
+    'MIN_SAFE_INTEGER,parseFloat,parseInt,isInteger'
+  ).split(','), j = 0, key; keys.length > j; j++) {
+    if (has(Base, key = keys[j]) && !has($Number, key)) {
+      dP($Number, key, gOPD(Base, key));
+    }
+  }
+  $Number.prototype = proto;
+  proto.constructor = $Number;
+  __webpack_require__("2aba")(global, NUMBER, $Number);
+}
 
 
 /***/ }),
@@ -1067,12 +1274,12 @@ __webpack_require__.r(__webpack_exports__);
 // EXTERNAL MODULE: ./node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
 var setPublicPath = __webpack_require__("1eb2");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"9e7853d2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Table.vue?vue&type=template&id=726b8cac&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"table"}},[_c('div',{class:{'table-responsive':_vm.responsive}},[_c('table',{class:_vm.classes.table},[_c('thead',{class:_vm.classes.thead},[_c('tr',_vm._l((_vm.columns_norm),function(column,key){return _c('th',{key:key,on:{"click":function($event){_vm.setSortColumn(key)}}},[_vm._v(_vm._s(column.name))])}))]),_c('tbody',_vm._l((_vm.data),function(row,key){return _c('tr',{key:key},_vm._l((_vm.columns_norm),function(column,key){return _c('td',{key:key},[(column.type === 'boolean')?[(_vm.booleanIcons.type === 'font-awesome')?[(row[column.dataKey[0]])?_c('font-awesome-icon',{attrs:{"icon":_vm.booleanIcons.true}}):_c('font-awesome-icon',{attrs:{"icon":_vm.booleanIcons.false}})]:_vm._e(),(_vm.booleanIcons.type === 'font-awesome')?[(row[column.dataKey[0]])?[_vm._v(_vm._s(_vm.booleanIcons.true))]:[_vm._v(_vm._s(_vm.booleanIcons.false))]]:_vm._e()]:[_vm._l((column.dataKey),function(key){return [_vm._v(_vm._s(row[key])+" ")]})]],2)}))}))])]),_c('div',{staticClass:"row"},[_c('div',{staticClass:"md-6"},[_c('div',{staticClass:"form-group"},[_c('label',{attrs:{"for":"rowsPerPage"}},[_vm._v(_vm._s(_vm.trans.rowsPerPage))]),_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.rowsPerPage),expression:"rowsPerPage"}],staticClass:"form-control",attrs:{"name":"rowsPerPage","id":"rowsPerPage"},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.rowsPerPage=$event.target.multiple ? $$selectedVal : $$selectedVal[0]}}},[_c('option',{attrs:{"value":"25"}},[_vm._v("25")]),_c('option',{attrs:{"value":"50"}},[_vm._v("50")]),_c('option',{attrs:{"value":"100"}},[_vm._v("100")])])])])])])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"9e7853d2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Table.vue?vue&type=template&id=300d3a7c&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"table"}},[_c('div',{class:{'table-responsive':_vm.responsive}},[_c('table',{class:_vm.classes.table},[_c('thead',{class:_vm.classes.thead},[_c('tr',_vm._l((_vm.columns_norm),function(column,key){return _c('th',{key:key,on:{"click":function($event){_vm.setSortColumn(key)}}},[_vm._v(_vm._s(column.name))])}))]),_c('tbody',_vm._l((_vm.data),function(row,key){return _c('tr',{key:key},_vm._l((_vm.columns_norm),function(column,key){return _c('td',{key:key},[(column.type === 'boolean')?[(_vm.booleanIcons.type === 'font-awesome')?[(row[column.dataKey[0]])?_c('font-awesome-icon',{attrs:{"icon":_vm.booleanIcons.true}}):_c('font-awesome-icon',{attrs:{"icon":_vm.booleanIcons.false}})]:[(row[column.dataKey[0]])?[_vm._v(_vm._s(_vm.booleanIcons.true))]:[_vm._v(_vm._s(_vm.booleanIcons.false))]]]:[_vm._l((column.dataKey),function(key){return [_vm._v(_vm._s(row[key])+" ")]})]],2)}))}))])]),_c('div',{staticClass:"row"},[_c('div',{staticClass:"col-md-6 col-lg-4 col-xl-3"},[_c('div',{staticClass:"form-group form-row"},[_c('div',{staticClass:"col-sm-6"},[_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.rowsPerPage),expression:"rowsPerPage"}],staticClass:"form-control",attrs:{"name":"rowsPerPage","id":"rowsPerPage"},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.rowsPerPage=$event.target.multiple ? $$selectedVal : $$selectedVal[0]}}},[_c('option',{attrs:{"value":"25"}},[_vm._v("25")]),_c('option',{attrs:{"value":"50"}},[_vm._v("50")]),_c('option',{attrs:{"value":"100"}},[_vm._v("100")])])]),_c('label',{staticClass:"col-sm-6 col-form-label",attrs:{"for":"rowsPerPage"}},[_vm._v(_vm._s(_vm.trans.rowsPerPage))])])]),_c('div',{staticClass:"col-md-6 offset-lg-2  offset-xl-3"},[_c('div',{staticClass:"float-right"},[_c('Pagination',{attrs:{"data":_vm.pagination},on:{"pagination-change-page":_vm.pageChange}})],1)])])])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Table.vue?vue&type=template&id=726b8cac&
+// CONCATENATED MODULE: ./src/components/Table.vue?vue&type=template&id=300d3a7c&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.iterator.js
 var es6_array_iterator = __webpack_require__("cadf");
@@ -1102,11 +1309,17 @@ function _typeof(obj) {
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom.iterable.js
 var web_dom_iterable = __webpack_require__("ac6a");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Table.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"9e7853d2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Pagination.vue?vue&type=template&id=42269394&
+var Paginationvue_type_template_id_42269394_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.data.total > _vm.data.per_page)?_c('ul',{staticClass:"pagination"},[(_vm.data.prev_page_url)?_c('li',{staticClass:"page-item pagination-prev-nav"},[_c('a',{staticClass:"page-link",attrs:{"href":"#","aria-label":"Previous"},on:{"click":function($event){$event.preventDefault();_vm.selectPage(--_vm.data.current_page, $event)}}},[_vm._t("prev-nav",[_c('span',{attrs:{"aria-hidden":"true"}},[_vm._v("«")]),_c('span',{staticClass:"sr-only"},[_vm._v("Previous")])])],2)]):_vm._e(),_vm._l((_vm.pages),function(n){return _c('li',{key:n,staticClass:"page-item pagination-page-nav",class:{ active: n == _vm.data.current_page }},[_c('a',{staticClass:"page-link",attrs:{"href":"#"},on:{"click":function($event){$event.preventDefault();_vm.selectPage(n, $event)}}},[_vm._v(_vm._s(n))])])}),(_vm.data.next_page_url)?_c('li',{staticClass:"page-item pagination-next-nav"},[_c('a',{staticClass:"page-link",attrs:{"href":"#","aria-label":"Next"},on:{"click":function($event){$event.preventDefault();_vm.selectPage(++_vm.data.current_page, $event)}}},[_vm._t("next-nav",[_c('span',{attrs:{"aria-hidden":"true"}},[_vm._v("»")]),_c('span',{staticClass:"sr-only"},[_vm._v("Next")])])],2)]):_vm._e()],2):_vm._e()}
+var Paginationvue_type_template_id_42269394_staticRenderFns = []
 
 
+// CONCATENATED MODULE: ./src/components/Pagination.vue?vue&type=template&id=42269394&
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.number.constructor.js
+var es6_number_constructor = __webpack_require__("c5f6");
 
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Pagination.vue?vue&type=script&lang=js&
 
 //
 //
@@ -1132,141 +1345,84 @@ var web_dom_iterable = __webpack_require__("ac6a");
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ var Tablevue_type_script_lang_js_ = ({
-  name: 'Table',
+/* harmony default export */ var Paginationvue_type_script_lang_js_ = ({
+  name: 'pagination',
   props: {
-    booleanIcons: {
+    data: {
       type: Object,
       default: function _default() {
         return {
-          true: 'X',
-          false: ''
+          current_page: 1,
+          data: [],
+          from: 1,
+          last_page: 1,
+          next_page_url: null,
+          per_page: 10,
+          prev_page_url: null,
+          to: 1,
+          total: 0
         };
       }
     },
-    responsive: {
-      type: Boolean,
-      default: true
-    },
-    classes: {
-      type: Object,
-      default: function _default() {
-        return {
-          table: 'table',
-          thead: ''
-        };
-      }
-    },
-    trans: {
-      type: Object,
-      default: function _default() {
-        return {
-          rowsPerPage: 'Items'
-        };
-      }
-    },
-    data: [Array, Object],
-    columns: Array
-  },
-  computed: {
-    columns_norm: function columns_norm() {
-      var columns = [];
-      this.columns.forEach(function (column) {
-        var col = {}; // Add key
-
-        if (typeof column.key === 'undefined' || typeof column.key !== 'string' && _typeof(column.key) !== 'object') {
-          window.console.log(column.key);
-          return;
-        } else if (typeof column.key === 'string') {
-          col.dataKey = [column.key];
-          col.sortKey = column.key;
-        } else {
-          col.dataKey = column.key;
-          col.sortKey = column.key[0];
-        } // Add name
-
-
-        if (typeof column.name === 'undefined') {
-          col.name = column.key;
-        } else {
-          col.name = column.name;
-        } // Add type
-
-
-        if (typeof column.type === 'undefined' || column.type !== 'string' && column.type !== 'boolean' && column.type !== 'date') {
-          col.type = 'string';
-        } else {
-          col.type = column.type;
-        }
-
-        columns.push(col);
-        return;
-      });
-      return columns;
+    limit: {
+      type: Number,
+      default: 0
     }
   },
-  data: function data() {
-    return {
-      sortColumn: Object.keys(this.columns)[0],
-      sortOrder: 'DESC',
-      page: 1,
-      rowsPerPage: 25
-    };
-  },
-  watch: {
-    rowsPerPage: function rowsPerPage() {
-      this.emitUpdate();
+  computed: {
+    pages: function pages() {
+      if (this.limit === -1) {
+        return 0;
+      }
+
+      if (this.limit === 0) {
+        return this.data.last_page;
+      }
+
+      var current = this.data.current_page,
+          last = this.data.last_page,
+          delta = this.limit,
+          left = current - delta,
+          right = current + delta + 1,
+          range = [],
+          pages = [],
+          l;
+
+      for (var i = 1; i <= last; i++) {
+        if (i == 1 || i == last || i >= left && i < right) {
+          range.push(i);
+        }
+      }
+
+      range.forEach(function (i) {
+        if (l) {
+          if (i - l === 2) {
+            pages.push(l + 1);
+          } else if (i - l !== 1) {
+            pages.push('...');
+          }
+        }
+
+        pages.push(i);
+        l = i;
+      });
+      return pages;
     }
   },
   methods: {
-    setSortColumn: function setSortColumn(column) {
-      if (this.sortColumn === column) {
-        this.flipSortOrder();
+    selectPage: function selectPage(page, e) {
+      e.preventDefault();
+
+      if (page === '...') {
+        return;
       }
 
-      this.sortColumn = column;
-      this.emitUpdate();
-    },
-    flipSortOrder: function flipSortOrder() {
-      this.sortOrder = this.sortOrder === 'DESC' ? 'ASC' : 'DESC';
-    },
-    emitUpdate: function emitUpdate() {
-      this.$emit('update', {
-        sortColumn: this.sortColumn,
-        sortOrder: this.sortOrder,
-        page: this.page,
-        rowsPerPage: this.rowsPerPage
-      });
+      this.$emit('pagination-change-page', page);
     }
   }
 });
-// CONCATENATED MODULE: ./src/components/Table.vue?vue&type=script&lang=js&
- /* harmony default export */ var components_Tablevue_type_script_lang_js_ = (Tablevue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/Pagination.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_Paginationvue_type_script_lang_js_ = (Paginationvue_type_script_lang_js_); 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 /* globals __VUE_SSR_CONTEXT__ */
 
@@ -1362,7 +1518,7 @@ function normalizeComponent (
   }
 }
 
-// CONCATENATED MODULE: ./src/components/Table.vue
+// CONCATENATED MODULE: ./src/components/Pagination.vue
 
 
 
@@ -1371,6 +1527,223 @@ function normalizeComponent (
 /* normalize component */
 
 var component = normalizeComponent(
+  components_Paginationvue_type_script_lang_js_,
+  Paginationvue_type_template_id_42269394_render,
+  Paginationvue_type_template_id_42269394_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+component.options.__file = "Pagination.vue"
+/* harmony default export */ var Pagination = (component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Table.vue?vue&type=script&lang=js&
+
+
+
+
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ var Tablevue_type_script_lang_js_ = ({
+  name: 'Table',
+  components: {
+    Pagination: Pagination
+  },
+  props: {
+    booleanIcons: {
+      type: Object,
+      default: function _default() {
+        return {
+          true: 'X',
+          false: ''
+        };
+      }
+    },
+    responsive: {
+      type: Boolean,
+      default: true
+    },
+    classes: {
+      type: Object,
+      default: function _default() {
+        return {
+          table: 'table',
+          thead: ''
+        };
+      }
+    },
+    trans: {
+      type: Object,
+      default: function _default() {
+        return {
+          rowsPerPage: 'Items per page'
+        };
+      }
+    },
+    data: [Array, Object],
+    pagination: {
+      type: Object,
+      default: function _default() {
+        return {
+          current_page: 1,
+          data: [],
+          from: 1,
+          last_page: 1,
+          next_page_url: null,
+          per_page: 10,
+          prev_page_url: null,
+          to: 1,
+          total: 0
+        };
+      }
+    },
+    columns: Array
+  },
+  computed: {
+    columns_norm: function columns_norm() {
+      var columns = [];
+      this.columns.forEach(function (column) {
+        var col = {}; // Add key
+
+        if (typeof column.key === 'undefined' || typeof column.key !== 'string' && _typeof(column.key) !== 'object') {
+          window.console.log(column.key);
+          return;
+        } else if (typeof column.key === 'string') {
+          col.dataKey = [column.key];
+          col.sortKey = column.key;
+        } else {
+          col.dataKey = column.key;
+          col.sortKey = column.key[0];
+        } // Add name
+
+
+        if (typeof column.name === 'undefined') {
+          col.name = column.key;
+        } else {
+          col.name = column.name;
+        } // Add type
+
+
+        if (typeof column.type === 'undefined' || column.type !== 'string' && column.type !== 'boolean' && column.type !== 'date') {
+          col.type = 'string';
+        } else {
+          col.type = column.type;
+        }
+
+        columns.push(col);
+        return;
+      });
+      return columns;
+    }
+  },
+  data: function data() {
+    return {
+      sortColumn: Object.keys(this.columns)[0],
+      sortOrder: 'DESC',
+      page: 1,
+      rowsPerPage: 25
+    };
+  },
+  watch: {
+    rowsPerPage: function rowsPerPage() {
+      this.emitUpdate();
+    }
+  },
+  methods: {
+    setSortColumn: function setSortColumn(column) {
+      if (this.sortColumn === column) {
+        this.flipSortOrder();
+      }
+
+      this.sortColumn = column;
+      this.emitUpdate();
+    },
+    flipSortOrder: function flipSortOrder() {
+      this.sortOrder = this.sortOrder === 'DESC' ? 'ASC' : 'DESC';
+    },
+    pageChange: function pageChange(page) {
+      this.page = page;
+      this.emitUpdate();
+    },
+    emitUpdate: function emitUpdate() {
+      this.$emit('update', {
+        sortColumn: this.sortColumn,
+        sortOrder: this.sortOrder,
+        page: this.page,
+        rowsPerPage: this.rowsPerPage
+      });
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/components/Table.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_Tablevue_type_script_lang_js_ = (Tablevue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/Table.vue
+
+
+
+
+
+/* normalize component */
+
+var Table_component = normalizeComponent(
   components_Tablevue_type_script_lang_js_,
   render,
   staticRenderFns,
@@ -1381,13 +1754,22 @@ var component = normalizeComponent(
   
 )
 
-component.options.__file = "Table.vue"
-/* harmony default export */ var Table = (component.exports);
+Table_component.options.__file = "Table.vue"
+/* harmony default export */ var Table = (Table_component.exports);
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
 
 
 /* harmony default export */ var entry_lib = __webpack_exports__["default"] = (Table);
 
+
+
+/***/ }),
+
+/***/ "fdef":
+/***/ (function(module, exports) {
+
+module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
+  '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
 
 
 /***/ })
