@@ -15,7 +15,7 @@
               <template v-if="column.type === 'boolean'">
                 <template v-if="booleanIcons.type === 'font-awesome'">
                   <font-awesome-icon v-if="row[column.dataKey[0]]" :icon="booleanIcons.true"/>
-                  <font-awesome-icon v-else :icon="booleanIcons.false"/>
+                  <font-awesome-icon v-else-if="booleanIcons.false !== '' && booleanIcons.false !== null" :icon="booleanIcons.false"/>
                 </template>
                 <template v-else>
                   <template v-if="row[column.dataKey[0]]">{{booleanIcons.true}}</template>
