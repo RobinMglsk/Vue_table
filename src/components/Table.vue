@@ -46,12 +46,19 @@
           <label for="rowsPerPage" class="col-sm-6 col-form-label">{{trans.rowsPerPage}}</label>
         </div>
       </div>
+      <div class="col-md-6 offset-lg-2  offset-xl-3">
+        <div class="float-right">
+        <Pagination :data="pagination" @pagination-change-page="pageChange"/>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <script>
+import Pagination from './Pagination'
 export default {
   name: 'Table',
+  components: { Pagination },
   props: {
     booleanIcons: {
       type: Object,
@@ -84,6 +91,22 @@ export default {
       }
     },
     data: [Array, Object],
+    pagination: {
+      type: Object,
+      default: function() {
+        return {
+          current_page: 1,
+          data: [],
+          from: 1,
+          last_page: 1,
+          next_page_url: null,
+          per_page: 10,
+          prev_page_url: null,
+          to: 1,
+          total: 0
+        };
+      }
+    },
     columns: Array
   },
   computed:{
@@ -152,6 +175,10 @@ export default {
     },
     flipSortOrder: function(){
       this.sortOrder = this.sortOrder === 'DESC' ? 'ASC' :'DESC';
+    },
+    pageChange(page){
+      this.page = page;
+      this.emitUpdate();
     },
     emitUpdate: function(){
       this.$emit('update', {

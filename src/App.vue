@@ -1,11 +1,12 @@
 <template>
   <div id="app">
-    <Table :data="tableData" :columns="columns" :classes="classes" @update="getData($event.page, $event.sortColumn, $event.sortOrder)"/>
+    <Table :data="data" :columns="columns" :classes="classes" :pagination="pagination" @update="getData($event.page, $event.rowsPerPage, $event.sortColumn, $event.sortOrder)"/>
   </div>
 </template>
 
 <script>
 import Table from './components/Table.vue'
+import testData from './testData'
 
 export default {
   name: 'app',
@@ -34,35 +35,27 @@ export default {
           type: 'boolean'
         }
       ],
-      tableData: [
-        {
-          first_name : 'Robin',
-          last_name : 'Migalski',
-          email : 'robin@robinmglsk.com',
-          phone : '011 22 33 32',
-          active : true
-        },
-        {
-          first_name : 'Ebe',
-          last_name : 'Migalski',
-          email : 'Ebe@robinmglsk.com',
-          phone : '011 22 33 31',
-          active : true
-        },
-        {
-          first_name : 'Jolien',
-          last_name : 'Coemans',
-          email : 'jolien@robinmglsk.com',
-          phone : '011 22 33 33',
-          active : false
-        }
-      ]
+      pagination: {
+        
+      },
+      data: []
     }
   },
+  created(){
+    this.getData(1, 25, null, null);
+  },
   methods:{
-    getData: function(page, sortColumn, sortOrder){
-      window.console.log(page+sortColumn+sortOrder);
-      window.console.log('Fetched data from sever');
+    getData: function(page, itemsPerPage, sortColumn, sortOrder){
+
+      window.console.log(page+itemsPerPage+sortColumn+sortOrder)
+      this.pagination.current_page = testData[page].current_page
+      this.pagination.from = testData[page].from
+      this.pagination.to = testData[page].to
+      this.pagination.last_page = testData[page].last_page
+      this.pagination.total = testData[page].total
+      this.pagination.per_page = testData[page].per_page
+
+      this.data = testData[page].data
     }
   }
 }
