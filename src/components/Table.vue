@@ -4,7 +4,7 @@
       <table :class="classes.table">
         <thead :class="classes.thead">
           <tr>
-            <th v-for="(column,key) in columns_norm" :key="key" @click="setSortColumn(key)">{{column.name}}</th>
+            <th v-for="(column,key) in columns_norm" :key="key" @click="setSortColumn(column.dataKey[0])">{{column.name}}</th>
           </tr>
         </thead>
         <tbody>
