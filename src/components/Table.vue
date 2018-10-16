@@ -8,7 +8,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(row, key) in data" :key="key">
+          <tr v-for="(row, key) in data" :key="key" :class="{ 'link' : typeof link === 'object'}" @click="followLink(key)">
             <td v-for="(column,key) in columns_norm" :key="key">
               
               <!-- Type is boolean -->
@@ -60,6 +60,10 @@ export default {
   name: 'Table',
   components: { Pagination },
   props: {
+    link : {
+      type: [ Object, Boolean],
+      default: false
+    },
     booleanIcons: {
       type: Object,
       default: function(){
@@ -180,6 +184,23 @@ export default {
       this.page = page;
       this.emitUpdate();
     },
+    followLink: function(rowId) {
+      if(typeof this.link === 'object' && typeof this.link.name === 'string'){
+
+        const params = {};
+
+        Object.keys(this.link.params).forEach( key => {
+
+          params[key] = this.data[rowId][this.link.params[key]]
+        });
+
+        window.console.log(params);
+        this.$router.push({
+          name: this.link.name,
+          params
+        })
+      }
+    },
     emitUpdate: function(){
       this.$emit('update', {
         sortColumn: this.sortColumn,
@@ -191,3 +212,8 @@ export default {
   }
 }
 </script>
+<style>
+  .link {
+    cursor: pointer;
+  }
+</style>

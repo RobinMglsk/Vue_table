@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Table :data="data" :columns="columns" :classes="classes" :pagination="pagination" @update="getData($event.page, $event.rowsPerPage, $event.sortColumn, $event.sortOrder)"/>
+    <Table :data="data" :columns="columns" :link="link" :classes="classes" :pagination="pagination" @update="getData($event.page, $event.rowsPerPage, $event.sortColumn, $event.sortOrder)"/>
   </div>
 </template>
 
@@ -15,8 +15,9 @@ export default {
   },
   data() {
     return {
+      link: { name: 'pagen-name', params : { id: 'id', fname: 'first_name'}},
       classes:{
-        table: ['table', 'table-striped'],
+        table: ['table', 'table-striped', 'table-hover'],
         thead: ['thead-dark']
       },
       columns: [
