@@ -13,8 +13,14 @@
               
               <!-- Type is boolean -->
               <template v-if="column.type === 'boolean'">
-                <template v-if="row[column.dataKey[0]]">{{booleanIcons.true}}</template>
-                <template v-else>{{booleanIcons.false}}</template>
+                <template v-if="booleanIcons.type === 'font-awesome'">
+                  <font-awesome-icon v-if="row[column.dataKey[0]]" :icon="booleanIcons.true"/>
+                  <font-awesome-icon v-else :icon="booleanIcons.false"/>
+                </template>
+                <template v-if="booleanIcons.type === 'font-awesome'">
+                  <template v-if="row[column.dataKey[0]]">{{booleanIcons.true}}</template>
+                  <template v-else>{{booleanIcons.false}}</template>
+                </template>
               </template>
 
               <!-- Type is string -->
