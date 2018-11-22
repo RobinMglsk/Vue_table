@@ -201,7 +201,19 @@ export default {
 
         Object.keys(this.link.params).forEach( key => {
 
-          params[key] = this.data[rowId][this.link.params[key]]
+          if(typeof this.link.params[key] === 'string'){
+            if(typeof this.data[rowId][this.link.params[key]] !== 'undefined'){
+              params[key] = this.data[rowId][this.link.params[key]]
+            }else{
+              params[key] = key
+            }
+          }else if(typeof this.link.params[key] === 'object' && typeof this.link.params[key].static !== 'undefined'){
+            if(this.link.params[key].static){
+              params[key] = this.link.params[key].value
+            }else{
+              params[key] = this.data[rowId][this.link.params[key].value]
+            }
+          }
         });
 
         window.console.log(params);

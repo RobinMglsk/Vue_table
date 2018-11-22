@@ -15,7 +15,22 @@ export default {
   },
   data() {
     return {
-      link: { name: 'pagen-name', params : { id: 'id', fname: 'first_name'}},
+      link: { 
+        name: 'pagen-name', 
+        params : { 
+          id: 'id', 
+          fname: 'first_name', 
+          x: 'qsdsqd', 
+          y: { 
+            static: true, 
+            value: 'id'
+          },
+          z: { 
+            static: false, 
+            value: 'id'
+          }
+        }
+      },
       classes:{
         table: ['table', 'table-striped', 'table-hover'],
         thead: ['thead-dark']
