@@ -1,8 +1,7 @@
 {
-  "name": "vue_table",
+  "name": "@robinmglsk/vue_table",
   "version": "0.1.8",
   "main": "./dist/Table.common.js",
-  "private": true,
   "git": "https://github.com/RobinMglsk/Vue_table",
   "scripts": {
     "serve": "vue-cli-service serve --open",
