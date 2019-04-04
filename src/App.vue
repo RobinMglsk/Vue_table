@@ -49,6 +49,11 @@ export default {
           name: 'Active',
           key: ['active'],
           type: 'boolean'
+        },
+         {
+          name: 'Object',
+          key: ['object_data.object.item'],
+          type: 'string'
         }
       ],
       pagination: {

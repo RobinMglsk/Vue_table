@@ -22,7 +22,13 @@ export default {
         user_group: 1,
         created_at: null,
         updated_at: null,
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+          object: {
+            item: 'TestItem'
+          }
+        }
       },
       {
         id: 2,
@@ -44,7 +50,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:05',
         updated_at: '2018-10-16 12:59:05',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 3,
@@ -66,7 +75,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:05',
         updated_at: '2018-10-16 12:59:05',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 4,
@@ -88,7 +100,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:05',
         updated_at: '2018-10-16 12:59:05',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 5,
@@ -110,7 +125,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:05',
         updated_at: '2018-10-16 12:59:05',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 6,
@@ -132,7 +150,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:05',
         updated_at: '2018-10-16 12:59:05',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 7,
@@ -154,7 +175,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:05',
         updated_at: '2018-10-16 12:59:05',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 8,
@@ -176,7 +200,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:05',
         updated_at: '2018-10-16 12:59:05',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 9,
@@ -198,7 +225,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:05',
         updated_at: '2018-10-16 12:59:05',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 10,
@@ -220,7 +250,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:05',
         updated_at: '2018-10-16 12:59:05',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 11,
@@ -242,7 +275,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:05',
         updated_at: '2018-10-16 12:59:05',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 12,
@@ -264,7 +300,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:05',
         updated_at: '2018-10-16 12:59:05',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 13,
@@ -286,7 +325,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:05',
         updated_at: '2018-10-16 12:59:05',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 14,
@@ -308,7 +350,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:05',
         updated_at: '2018-10-16 12:59:05',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 15,
@@ -330,7 +375,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:06',
         updated_at: '2018-10-16 12:59:06',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 16,
@@ -352,7 +400,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:06',
         updated_at: '2018-10-16 12:59:06',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 17,
@@ -374,7 +425,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:06',
         updated_at: '2018-10-16 12:59:06',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 18,
@@ -396,7 +450,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:06',
         updated_at: '2018-10-16 12:59:06',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 19,
@@ -418,7 +475,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:06',
         updated_at: '2018-10-16 12:59:06',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 20,
@@ -440,7 +500,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:06',
         updated_at: '2018-10-16 12:59:06',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 21,
@@ -462,7 +525,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:06',
         updated_at: '2018-10-16 12:59:06',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 22,
@@ -484,7 +550,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:06',
         updated_at: '2018-10-16 12:59:06',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 23,
@@ -506,7 +575,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:06',
         updated_at: '2018-10-16 12:59:06',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 24,
@@ -528,7 +600,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:06',
         updated_at: '2018-10-16 12:59:06',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       },
       {
         id: 25,
@@ -550,7 +625,10 @@ export default {
         user_group: 0,
         created_at: '2018-10-16 12:59:06',
         updated_at: '2018-10-16 12:59:06',
-        deleted_at: null
+        deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
       }
     ],
     first_page_url: 'http://egbcloud.ebe:8001/api/v1/users?page_size=25&order_by=id&sort=ASC&page=1',
@@ -587,7 +665,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 27,
@@ -609,7 +690,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 28,
@@ -631,7 +715,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 29,
@@ -653,7 +740,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 30,
@@ -675,7 +765,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 31,
@@ -697,7 +790,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 32,
@@ -719,7 +815,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 33,
@@ -741,7 +840,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 34,
@@ -763,7 +865,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 35,
@@ -785,7 +890,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 36,
@@ -807,7 +915,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 37,
@@ -829,7 +940,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 38,
@@ -851,7 +965,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 39,
@@ -873,7 +990,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 40,
@@ -895,7 +1015,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 41,
@@ -917,7 +1040,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 42,
@@ -939,7 +1065,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 43,
@@ -961,7 +1090,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 44,
@@ -983,7 +1115,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 45,
@@ -1005,7 +1140,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 46,
@@ -1027,7 +1165,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 47,
@@ -1049,7 +1190,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 48,
@@ -1071,7 +1215,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 49,
@@ -1093,7 +1240,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         },
         {
           id: 50,
@@ -1115,7 +1265,10 @@ export default {
           user_group: 0,
           created_at: '2018-10-16 12:59:06',
           updated_at: '2018-10-16 12:59:06',
-          deleted_at: null
+          deleted_at: null,
+        object_data: {
+          array: ['Test'],
+        }
         }
       ],
       first_page_url: 'http://egbcloud.ebe:8001/api/v1/users?page_size=25&order_by=id&sort=ASC&page=1',
