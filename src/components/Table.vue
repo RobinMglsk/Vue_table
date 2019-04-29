@@ -8,7 +8,19 @@
                             v-for="(column,key) in columns_norm"
                             :key="key"
                             @click="setSortColumn(column.dataKey[0])"
+                            @dblclick="showFilter = !showFilter"
                         >{{column.name}}</th>
+                    </tr>
+                    <tr v-if="showFilter">
+                        <th id="filter" v-for="(column,key) in columns_norm" :key="key">
+                            <input
+                                type="text"
+                                class="form-control-sm form-control"
+                                v-model="dColumns[key].filter"
+                                @change="filter(key)"
+                                :disabled="column.filter_disabled"
+                            >
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -149,9 +161,30 @@ export default {
         columns: Array
     },
     computed: {
+        filters: function(){
+            return this.dColumns.reduce((acc, val) => {
+
+                if(typeof val.filter === 'undefined'){
+                    return acc
+                }
+
+                if(acc === ''){
+                    acc+','
+                }
+
+                if(typeof val.key === 'object'){
+                    return `${acc}${val.key[0]}:${val.filter}`
+                }else{
+                    return `${acc}${val.key}:${val.filter}`
+                }
+
+
+
+            },'');
+        },
         columns_norm: function() {
             const columns = [];
-            this.columns.forEach(column => {
+            this.dColumns.forEach(column => {
                 const col = {};
 
                 // Add key
@@ -189,6 +222,25 @@ export default {
                     col.type = column.type;
                 }
 
+                // Add filter
+                if (
+                    typeof column.filter === "undefined" ||
+                    (column.type !== "string" &&
+                        column.type !== "boolean" &&
+                        column.type !== "date")
+                ) {
+                    col.type = "string";
+                } else {
+                    col.type = column.type;
+                }
+
+                // Add filter_disabled
+                if (typeof column.filter_disabled !== "boolean") {
+                    col.filter_disabled = false;
+                } else {
+                    col.filter_disabled = column.filter_disabled;
+                }
+
                 columns.push(col);
                 return;
             });
@@ -201,7 +253,9 @@ export default {
             sortColumn: Object.keys(this.columns)[0],
             sortOrder: "DESC",
             page: 1,
-            rowsPerPage: 25
+            rowsPerPage: 25,
+            showFilter: true,
+            dColumns: this.columns
         };
     },
     watch: {
@@ -217,6 +271,9 @@ export default {
 
             this.sortColumn = column;
             this.emitUpdate();
+        },
+        filter: function() {
+
         },
         flipSortOrder: function() {
             this.sortOrder = this.sortOrder === "DESC" ? "ASC" : "DESC";
@@ -304,5 +361,12 @@ export default {
 .loader {
     background: white;
     text-align: center;
+}
+
+th#filter {
+    padding: 0.25em 0.25em 0.25em 0.75em;
+    &:last-child {
+        padding: 0.25em 0.75em 0.25em 0.75em;
+    }
 }
 </style>

@@ -43,12 +43,13 @@ export default {
         },
          {
           name: 'Name',
-          key: ['first_name','last_name']
+          key: ['first_name','last_name'],
         },
          {
           name: 'Active',
           key: ['active'],
-          type: 'boolean'
+          type: 'boolean',
+          filter_disabled: true
         },
          {
           name: 'Object',
