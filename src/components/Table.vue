@@ -11,7 +11,7 @@
                             @dblclick="showFilter = !showFilter"
                         >{{column.name}}</th>
                     </tr>
-                    <tr v-if="showFilter">
+                    <tr v-if="showFilter && filterable">
                         <th id="filter" v-for="(column,key) in columns_norm" :key="key">
                             <input
                                 type="text"
@@ -158,7 +158,11 @@ export default {
                 };
             }
         },
-        columns: Array
+        columns: Array,
+        filterable: {
+            type: Boolean,
+            default: false
+        }
     },
     computed: {
         filters: function(){
@@ -273,7 +277,7 @@ export default {
             this.emitUpdate();
         },
         filter: function() {
-
+            this.emitUpdate();
         },
         flipSortOrder: function() {
             this.sortOrder = this.sortOrder === "DESC" ? "ASC" : "DESC";
@@ -348,7 +352,8 @@ export default {
                 sortColumn: this.sortColumn,
                 sortOrder: this.sortOrder,
                 page: this.page,
-                rowsPerPage: this.rowsPerPage
+                rowsPerPage: this.rowsPerPage,
+                filters: this.filters
             });
         }
     }
