@@ -200,18 +200,6 @@ export default {
                     col.name = column.name;
                 }
 
-                // Add type
-                if (
-                    typeof column.type === "undefined" ||
-                    (column.type !== "string" &&
-                        column.type !== "boolean" &&
-                        column.type !== "date")
-                ) {
-                    col.type = "string";
-                } else {
-                    col.type = column.type;
-                }
-
                 // Add filter
                 if (typeof column.filter === "string") {
                     col.filter = column.filter;
