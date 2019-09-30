@@ -6,6 +6,7 @@
             :link="link"
             :classes="classes"
             :pagination="pagination"
+            :filters="filters"
             filterable
             @update="getData($event.page, $event.rowsPerPage, $event.sortColumn, $event.sortOrder, $event.filters)"
         />
@@ -46,7 +47,6 @@ export default {
             columns: [
                 {
                     name: "First Name",
-                    type: "First Name",
                     key: "first_name"
                 },
                 {
@@ -55,17 +55,28 @@ export default {
                 },
                 {
                     name: "Active",
-                    key: ["active"],
-                    type: "boolean",
-                    filter_disabled: true
+                    key: ["is_activated"],
+                    filter_disabled: true,
+                    filter: 'showYesOrNo'
                 },
                 {
                     name: "Object",
                     key: ["object_data.object.item"],
-                    type: "string"
+                    filter: 'reverseString'
                 }
             ],
             pagination: {},
+            filters:{
+                reverseString(data){
+                    if(typeof data !== 'string') return
+                    return data.split('').reverse().join('')
+                },
+                showYesOrNo(data){
+                    console.log(data)
+                    if(data) return 'Yes'
+                    return 'No'
+                }
+            },
             data: []
         };
     },

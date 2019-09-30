@@ -12,21 +12,25 @@
                         >{{column.name}}</th>
                     </tr>
                     <tr v-if="showFilter && filterable">
-                        <th id="filter" v-for="(column,key) in columns_norm" :key="key">
+                        <th
+                            v-for="(column,key) in columns_norm"
+                            :id="`columnFilter_${key}`"
+                            :key="key"
+                        >
                             <input
                                 type="text"
                                 class="form-control-sm form-control"
-                                v-model="dColumns[key].filter"
-                                @change="filter(key)"
+                                v-model="dColumns[key].columnFilter"
+                                @change="columnFilter(key)"
                                 :disabled="column.filter_disabled"
-                            >
+                            />
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td v-show="loading" :colspan="columns_norm.length" class="loader">
-                            <LoadingIndicator aria-busy="true"/>
+                            <LoadingIndicator aria-busy="true" />
                         </td>
                     </tr>
                     <tr
@@ -37,29 +41,13 @@
                         @click="followLink(key)"
                     >
                         <td v-for="(column,key) in columns_norm" :key="key">
-                            <!-- Type is boolean -->
-                            <template v-if="column.type === 'boolean'">
-                                <template v-if="booleanIcons.type === 'font-awesome'">
-                                    <font-awesome-icon
-                                        v-if="getData(row, column.dataKey[0])"
-                                        :icon="booleanIcons.true"
-                                    />
-                                    <font-awesome-icon
-                                        v-else-if="booleanIcons.false !== '' && booleanIcons.false !== null"
-                                        :icon="booleanIcons.false"
-                                    />
-                                </template>
-                                <template v-else>
-                                    <template
-                                        v-if="getData(row, column.dataKey[0])"
-                                    >{{booleanIcons.true}}</template>
-                                    <template v-else>{{booleanIcons.false}}</template>
-                                </template>
-                            </template>
-
-                            <!-- Type is string -->
-                            <template v-else>
-                                <template v-for="key in column.dataKey">{{getData(row, key)}} </template>
+                            <template v-for="key in column.dataKey">
+                                <!-- with filter -->
+                                <template
+                                    v-if="typeof column.filter === 'string'"
+                                >{{processFilter(getData(row, key), column.filter)}}</template>
+                                <!-- without filter -->
+                                <template v-else>{{getData(row, key)}}</template>
                             </template>
                         </td>
                     </tr>
@@ -111,15 +99,6 @@ export default {
             type: [Object, Boolean],
             default: false
         },
-        booleanIcons: {
-            type: Object,
-            default: function() {
-                return {
-                    true: "X",
-                    false: ""
-                };
-            }
-        },
         responsive: {
             type: Boolean,
             default: true
@@ -162,29 +141,36 @@ export default {
         filterable: {
             type: Boolean,
             default: false
+        },
+        filters: {
+            type: Object,
+            default: function() {
+                return {
+                    xxx: "xxx"
+                };
+            }
         }
     },
     computed: {
-        filters: function(){
+        columnFilters: function() {
             return this.dColumns.reduce((acc, val) => {
-
-                if(typeof val.filter === 'undefined'){
-                    return acc
+                if (
+                    typeof val.columnFilter === "undefined" ||
+                    val.columnFilter === ""
+                ) {
+                    return acc;
                 }
 
-                if(acc === ''){
-                    acc+','
+                if (acc === "") {
+                    acc + ",";
                 }
 
-                if(typeof val.key === 'object'){
-                    return `${acc}${val.key[0]}:${val.filter}`
-                }else{
-                    return `${acc}${val.key}:${val.filter}`
+                if (typeof val.key === "object") {
+                    return `${acc}${val.key[0]}:${val.columnFilter}`;
+                } else {
+                    return `${acc}${val.key}:${val.columnFilter}`;
                 }
-
-
-
-            },'');
+            }, "");
         },
         columns_norm: function() {
             const columns = [];
@@ -214,28 +200,9 @@ export default {
                     col.name = column.name;
                 }
 
-                // Add type
-                if (
-                    typeof column.type === "undefined" ||
-                    (column.type !== "string" &&
-                        column.type !== "boolean" &&
-                        column.type !== "date")
-                ) {
-                    col.type = "string";
-                } else {
-                    col.type = column.type;
-                }
-
                 // Add filter
-                if (
-                    typeof column.filter === "undefined" ||
-                    (column.type !== "string" &&
-                        column.type !== "boolean" &&
-                        column.type !== "date")
-                ) {
-                    col.type = "string";
-                } else {
-                    col.type = column.type;
+                if (typeof column.filter === "string") {
+                    col.filter = column.filter;
                 }
 
                 // Add filter_disabled
@@ -276,7 +243,7 @@ export default {
             this.sortColumn = column;
             this.emitUpdate();
         },
-        filter: function() {
+        columnFilter: function() {
             this.emitUpdate();
         },
         flipSortOrder: function() {
@@ -347,13 +314,25 @@ export default {
 
             return data[key];
         },
+        processFilter(data, filterName = null) {
+            if (
+                filterName !== null &&
+                typeof this.filters[filterName] === "function"
+            ) {
+                return this.filters[filterName](data);
+            } else {
+                console.error(`${filterName} is not a filter`);
+            }
+
+            return data;
+        },
         emitUpdate: function() {
             this.$emit("update", {
                 sortColumn: this.sortColumn,
                 sortOrder: this.sortOrder,
                 page: this.page,
                 rowsPerPage: this.rowsPerPage,
-                filters: this.filters
+                filters: this.columnFilters
             });
         }
     }
