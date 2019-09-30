@@ -6,6 +6,7 @@
             :link="link"
             :classes="classes"
             :pagination="pagination"
+            :filters="filters"
             filterable
             @update="getData($event.page, $event.rowsPerPage, $event.sortColumn, $event.sortOrder, $event.filters)"
         />
@@ -62,10 +63,17 @@ export default {
                 {
                     name: "Object",
                     key: ["object_data.object.item"],
-                    type: "string"
+                    type: "string",
+                    filter: 'reverseString'
                 }
             ],
             pagination: {},
+            filters:{
+                reverseString(data){
+                    if(typeof data !== 'string') return
+                    return data.split('').reverse().join('')
+                }
+            },
             data: []
         };
     },
