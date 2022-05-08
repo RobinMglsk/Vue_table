@@ -1,6 +1,7 @@
 {
   "name": "@robinmglsk/vue_table",
-  "version": "0.2.5",
+  "version": "0.2.6",
+  "license": "MIT",
   "main": "./dist/Table.common.js",
   "git": "https://github.com/RobinMglsk/Vue_table",
   "scripts": {
