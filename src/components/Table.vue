@@ -161,8 +161,8 @@ export default {
                     return acc;
                 }
 
-                if (acc === "") {
-                    acc + ",";
+                if (acc !== "") {
+                    acc += ",";
                 }
 
                 if (typeof val.key === "object") {
