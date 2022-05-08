@@ -51,7 +51,8 @@ export default {
                 },
                 {
                     name: "Name",
-                    key: ["first_name", "last_name"]
+                    key: ["first_name", "last_name"],
+                    sort_key: 'someSortFieldName'
                 },
                 {
                     name: "Active",
@@ -85,7 +86,8 @@ export default {
     },
     methods: {
         getData: function(page, itemsPerPage, sortColumn, sortOrder, filters) {
-            window.console.log(page + itemsPerPage + sortColumn + sortOrder + filters);
+            window.console.log(arguments);
+
             this.pagination.current_page = parseInt(
                 testData[page].current_page
             );
