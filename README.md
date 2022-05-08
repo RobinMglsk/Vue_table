@@ -106,7 +106,7 @@ You'll need to use at least the following prop / event handling to initially con
 * @update -- trigger an update for the data
 
 # Column Definition
-Columns ar defined as a array of objects.
+Columns ar defined as an array of objects.
 ```js
 
 const data = [
@@ -127,6 +127,7 @@ const data = [
     {
         name: "Object",
         key: ["company.name"], // Get date from an object
+        sort_key: "company_id", // The name of the column that wil be used for sorting (handy if you like to display data from a relation but want to sort on the id in the parent table)
     }
 ]
 ```
@@ -136,8 +137,12 @@ const data = [
 * Usage: Name that needs to be displayed for the column
 
 ### key
-* Type: `String`
+* Type: `String|Array<String>`
 * Usage: Key of the data to be displayed. If the string contains dots it wil handle the data as an object.
+
+### sort_key
+* Type: `String`
+* Usage: Field name that will be used as sortKey value on sort column event.
 
 ### filter_disabled
 * Type: `Boolean`

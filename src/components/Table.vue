@@ -7,7 +7,7 @@
                         <th
                             v-for="(column,key) in columns_norm"
                             :key="key"
-                            @click="setSortColumn(column.dataKey[0])"
+                            @click="setSortColumn(column.sortKey)"
                             @dblclick="showFilter = !showFilter"
                         >{{column.name}}</th>
                     </tr>
@@ -205,6 +205,11 @@ export default {
                     col.filter = column.filter;
                 }
 
+                // Add sort key
+                if (typeof column.sort_key === "string") {
+                    col.sortKey = column.sort_key;
+                }
+
                 // Add filter_disabled
                 if (typeof column.filter_disabled !== "boolean") {
                     col.filter_disabled = false;
@@ -319,9 +324,9 @@ export default {
                 filterName !== null &&
                 typeof this.filters[filterName] === "function"
             ) {
-                return this.filters[filterName](data);
+                return this.filters[filterName](data)
             } else {
-                console.error(`${filterName} is not a filter`);
+                window.console.error(`${filterName} is not a filter`);
             }
 
             return data;
