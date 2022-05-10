@@ -17,7 +17,18 @@
                             :id="`columnFilter_${key}`"
                             :key="key"
                         >
+                            <select 
+                                v-if="column.filterValues"
+                                class="form-control-sm form-control"
+                                v-model="dColumns[key].columnFilter"
+                                @change="columnFilter(key)"
+                                :disabled="column.filter_disabled"
+                            >
+                                <option></option>
+                                <option v-for="(value, index) in column.filterValues" :key="index" :value="value[0]">{{value[1]}}</option>
+                            </select>
                             <input
+                                v-else
                                 type="text"
                                 class="form-control-sm form-control"
                                 v-model="dColumns[key].columnFilter"
@@ -165,7 +176,9 @@ export default {
                     acc += ",";
                 }
 
-                if (typeof val.key === "object") {
+                if (typeof val.filter_key === "string") {
+                    return `${acc}${val.filter_key}:${val.columnFilter}`;
+                }else if (typeof val.key === "object") {
                     return `${acc}${val.key[0]}:${val.columnFilter}`;
                 } else {
                     return `${acc}${val.key}:${val.columnFilter}`;
@@ -188,9 +201,11 @@ export default {
                 } else if (typeof column.key === "string") {
                     col.dataKey = [column.key];
                     col.sortKey = column.key;
+                    col.filterKey = column.key;
                 } else {
                     col.dataKey = column.key;
                     col.sortKey = column.key[0];
+                    col.filterKey = column.key[0];
                 }
 
                 // Add name
@@ -203,6 +218,21 @@ export default {
                 // Add filter
                 if (typeof column.filter === "string") {
                     col.filter = column.filter;
+                }
+
+                // Add filter key
+                if (typeof column.filter_key === "string") {
+                    col.filterKey = column.filter_key;
+                }
+
+                // Add filter values
+                if (typeof column.filter_values === "object") {
+                    if (column.filter_values instanceof Array) {
+                        col.filterValues = new Map();
+                        column.filter_values.forEach( option => col.filterValues.set(option, option));
+                    }else if (column.filter_values instanceof Map) {
+                        col.filterValues = column.filter_values;
+                    }
                 }
 
                 // Add sort key

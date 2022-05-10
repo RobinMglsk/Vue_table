@@ -148,6 +148,14 @@ const data = [
 * Type: `Boolean`
 * Usage: If false disables the search filter on the column
 
+### filter_values
+* Type: `Array<String>`
+* Usages: If filter is enabled , it wil display a select dropdown menu with these values instead of a search field.
+
+### filter_key
+* Type: `String`
+* Usages: Key used to send to the server for filter values.
+
 ### filter
 * Type: `String`
 * Usage: The filter function to be called by Vue-table to format the value of the column to be displayed. The filter function will receive the raw data as the parameter from Vue-table, and it must return the value that Vue-table will use to display in that column. The filter functions themselves are defined as prop filter on the table component.
